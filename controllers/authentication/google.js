@@ -4,7 +4,7 @@ const mailSender = require('../../utils/mailSender');
 
 exports.sendVerificationMail = async (req, res) => {
     try {
-        const { email } = req.body;
+        const { email } = req.params;
         const otp = await generateOtp(email);
         const mailResponse = await mailSender(
             email,
@@ -13,10 +13,10 @@ exports.sendVerificationMail = async (req, res) => {
            <p>Here is your OTP code: ${otp.otp}</p>`
         );
         console.log("Email sent successfully: ", mailResponse);
-        return res.status(201).json(mailResponse);
+        return res.status(201).json({ success: true, message: 'OTP Sent', data: mailResponse });
     } catch (error) {
         console.log("Error occurred while sending email: ", error.message);
-        return res.status(500).json({ success: false, error: error.message })
+        return res.status(500).json({ success: false, message: error.message })
     }
 }
 
@@ -32,6 +32,6 @@ exports.verifyCode = async (req, res) => {
         }
     } catch (err) {
         console.log("Error occurred while verifying otp: ", err.message);
-        return res.status(500).json({ success: false, error: err.message })
+        return res.status(500).json({ success: false, message: err.message })
     }
 }
