@@ -1,5 +1,6 @@
 const User = require('../../models/user');
 const bcrypt = require('bcrypt');
+const { createJwtToken } = require('../../utils/jwtServices');
 
 exports.login = async (req, res) => {
     try {
@@ -8,7 +9,9 @@ exports.login = async (req, res) => {
         if (user) {
             const valid = await bcrypt.compare(password, user.password);
             if (valid) {
-                return res.status(200).json({ success: true, message: 'User Valid' });
+                const token = await createJwtToken(user);
+                const data = { token }
+                return res.status(200).json({ success: true, message: 'User Valid', data });
             } else {
                 return res.status(200).json({ success: false, message: 'Invalid Credentials' });
             }
@@ -48,7 +51,9 @@ exports.register = async (req, res) => {
                 role
             }
             const user = await User.create(info);
-            return res.status(200).json({ success: true, message: 'User Created Successfully', data: user });
+            const token = await createJwtToken(user);
+            const data = { token }
+            return res.status(200).json({ success: true, message: 'User Created Successfully', data });
         }
     } catch (err) {
         console.log('Error Occurred', err.message);
