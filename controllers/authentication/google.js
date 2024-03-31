@@ -20,6 +20,15 @@ exports.sendVerificationMail = async (req, res) => {
     }
 }
 
+exports.verifyIdToken = async (req, res) => {
+    try {
+        const decodedToken = await fetch(process.env.GOOGLE_API + 'id_token=' + req.query.idToken);
+        return res.status(200).json({ success: true, message: "User Verified", data: decodedToken })
+    } catch (error) {
+        return res.status(500).json({ success: false, message: error.message })
+    }
+}
+
 exports.verifyCode = async (req, res) => {
     try {
         const { email, userOtp } = req.body;

@@ -1,8 +1,10 @@
 const express = require('express');
-const { sendVerificationMail, test, verifyCode } = require('../controllers/authentication/google');
+const { sendVerificationMail, verifyCode, verifyIdToken } = require('../controllers/authentication/google');
 const router = express.Router();
 
 router.get("/send-code/:email", sendVerificationMail);
+
+router.get("/verify-id-token", verifyIdToken)
 
 router.post("/verify-code", verifyCode);
 
