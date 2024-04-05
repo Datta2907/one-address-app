@@ -4,7 +4,7 @@ const mailSender = require('../../utils/mailSender');
 
 exports.sendVerificationMail = async (req, res) => {
     try {
-        const { email } = req.params;
+        const { email } = req.query;
         const otp = await generateOtp(email);
         const mailResponse = await mailSender(
             email,

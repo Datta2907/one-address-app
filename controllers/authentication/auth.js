@@ -19,7 +19,7 @@ exports.login = async (req, res) => {
             return res.status(200).json({ success: false, message: 'Invalid Email!' });
         }
     } catch (err) {
-        console.log('Error Occurred', err.message);
+        console.log('Error Occurred Login', err.message);
         return res.status(500).json({ success: false, message: 'Error Occured' });
     }
 }
@@ -56,7 +56,18 @@ exports.register = async (req, res) => {
             return res.status(200).json({ success: true, message: 'User Created Successfully', data });
         }
     } catch (err) {
-        console.log('Error Occurred', err.message);
+        console.log('Error Occurred Registration', err.message);
         return res.status(500).json({ success: false, message: 'Error Occured' });
     }
+}
+
+exports.getStatus = async (req, res) => {
+    try {
+        console.log(req.user)
+        return res.status(200).json({ success: true, message: 'Get Status api hit is successfull' });
+    } catch (err) {
+        console.log('Error Occurred GetStatus', err.message);
+        return res.status(500).json({ success: false, message: 'Error Encountered' });
+    }
+
 }
