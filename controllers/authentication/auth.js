@@ -26,12 +26,13 @@ exports.login = async (req, res) => {
 
 exports.register = async (req, res) => {
     try {
-        const user = await User.findOne({ email: req.params.email });
+        const user = await User.findOne({ email: req.body.email });
         if (user) {
             return res.status(200).json({ success: true, message: 'Email Registered, would you like to login?' });
         } else {
-            const { firstName, lastName, password, role, email } = req.body;
-            if (!firstName || !lastName || !password || !role || !email) {
+            //todo- handle large data correctly
+            const { firstName, lastName, password, role, email, community, gender } = req.body;
+            if (!firstName || !lastName || !password || !role || !email || community || gender) {
                 return res.status(412).json({ success: false, message: 'Please Provide all the details!' });
             }
             if (!/^[a-z]+$/i.test(firstName) || !/^[a-z]+$/i.test(lastName)) {
@@ -45,10 +46,16 @@ exports.register = async (req, res) => {
             const info = {
                 name: firstName + lastName,
                 email,
-                password: encryptedPassword,
-                emailVerified: false,
-                mobile: null,
-                role
+                address,
+                mobile,
+                photo,
+                gender,
+                owner,
+                role,
+                community,
+                displayOrShareSensitiveDetails,
+                status: "APPLIED",
+                password: encryptedPassword
             }
             const user = await User.create(info);
             const token = await createJwtToken(user);
@@ -63,8 +70,8 @@ exports.register = async (req, res) => {
 
 exports.getStatus = async (req, res) => {
     try {
-        console.log(req.user)
-        return res.status(200).json({ success: true, message: 'Get Status api hit is successfull' });
+        const user = await User.findOne({ email: req.user.email }).lean();
+        return res.status(200).json({ success: true, message: '', data: user });
     } catch (err) {
         console.log('Error Occurred GetStatus', err.message);
         return res.status(500).json({ success: false, message: 'Error Encountered' });
