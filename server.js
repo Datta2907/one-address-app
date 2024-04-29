@@ -27,6 +27,7 @@ connectdb();
 app.use(express.json());
 app.use('/google-auth', require('./routes/google-route'));
 app.use('/manual-auth', require('./routes/auth-route'));
+app.use('/user', require('./routes/user-route'));
 //app.use('/user', require('./routes/user'));
 
 // needed in heroku

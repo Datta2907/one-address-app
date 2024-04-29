@@ -7,9 +7,9 @@ const communitySchema = new mongoose.Schema({
     city: { type: String, required: true, trim: true },
     pincode: { type: Number, required: true },
     area: { type: String, required: true, trim: true },
-    verifiedBy: { type: String, required: true, default: '' },
+    verifiedBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
     photo: { type: String, default: '' },
-    representative: { type: mongoose.Schema.Types.ObjectId, required: true, ref: 'User', unique: true },
+    representative: { type: mongoose.Schema.Types.ObjectId, ref: 'User', unique: true },
 }, { timestamps: true });
 
 module.exports = mongoose.model('Community', communitySchema)
