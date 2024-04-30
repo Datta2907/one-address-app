@@ -1,5 +1,22 @@
 const mongoose = require('mongoose');
 
+export const Role = {
+    PRESIDENT: "PRESIDENT",
+    RESIDENT: "RESIDENT",
+    TENANT: "TENANT",
+    DEVELOPER: "DEVELOPER",
+    OTHERS: "OTHERS",
+}
+
+export const Status = {
+    APPLIED: "APPLIED",
+    IN_PROGRESS: "IN_PROGRESS",
+    VERIFIED: "VERIFIED",
+    REJECTED: "REJECTED",
+    LEFT_THE_COMMUNITY: "LEFT_THE_COMMUNITY",
+    DEPARTED: "DEPARTED"
+}
+
 const userSchema = new mongoose.Schema({
     name: { type: String, required: true, trim: true },
     email: { type: String, required: true, trim: true, unique: true },
@@ -13,10 +30,10 @@ const userSchema = new mongoose.Schema({
     gender: { type: String, enum: ['MALE', 'FEMALE', 'OTHERS', 'PREFER_NOT_TO_SAY'], required: true },
     isOwner: { type: Boolean, default: false },
     isRepresentative: { type: Boolean, default: false },
-    role: { type: String, enum: ['PRESIDENT', 'RESIDENT', 'TENANT', 'DEVELOPER', 'OTHERS'], required: true, index: true },
+    role: { type: String, enum: Object.keys(Role), required: true, index: true },
     community: { type: mongoose.Schema.Types.ObjectId, required: true, ref: 'Community' },
     otherRole: { type: String, default: '' },//if role is others
-    status: { type: String, enum: ['APPLIED', 'IN_PROGRESS', 'VERIFIED', 'REJECTED', 'LEFT_THE_COMMUNITY', 'DEPARTED'], required: true },
+    status: { type: String, enum: Object.keys(Status), required: true },
     displayOrShareSensitiveDetails: { type: Boolean, default: false }, // consent
     verifiedBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
     password: { type: String, required: true },

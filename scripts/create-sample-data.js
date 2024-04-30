@@ -29,6 +29,7 @@ async function insertSampleData() {
             name: "Developers",
             address: "Ganesh nagar, beside sangeetha mobiles",
             country: "IN",
+            state: "Telangana",
             city: "Hyderabad",
             pincode: 500013,
             area: "ramanthapur",

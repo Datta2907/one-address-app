@@ -28,7 +28,7 @@ app.use(express.json());
 app.use('/google-auth', require('./routes/google-route'));
 app.use('/manual-auth', require('./routes/auth-route'));
 app.use('/user', require('./routes/user-route'));
-//app.use('/user', require('./routes/user'));
+app.use('/community', require('./routes/community-route'));
 
 // needed in heroku
 // if (process.env.NODE_ENV === 'production') {

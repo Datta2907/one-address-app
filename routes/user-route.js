@@ -1,7 +1,9 @@
 const express = require('express');
-const { register, getStatus, verifyUser } = require('../controllers/user');
+const { register, getRepresentatives, getStatus, verifyUser } = require('../controllers/user');
 const { authenticateUser } = require('../middlewares/authenticateUser');
 const router = express.Router();
+
+router.get("/representatives", authenticateUser, getRepresentatives)
 
 router.get("/application-status", authenticateUser, getStatus);
 

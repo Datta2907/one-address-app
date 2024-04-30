@@ -1,4 +1,4 @@
-const User = require('../models/user');
+const { User, Role } = require('../models/user');
 const bcrypt = require('bcrypt');
 const { createJwtToken } = require('../utils/jwtServices');
 
@@ -62,6 +62,16 @@ exports.getStatus = async (req, res) => {
     try {
         const user = await User.findOne({ email: req.user.email }).lean();
         return res.status(200).json({ success: true, message: '', data: user });
+    } catch (err) {
+        console.log('Error Occurred GetStatus', err.message);
+        return res.status(500).json({ success: false, message: 'Error Encountered' });
+    }
+}
+
+exports.getRepresentatives = async (req, res) => {
+    try {
+        const users = await User.find({ role: Role.RESIDENT }).lean();
+        return res.status(200).json({ success: true, message: '', data: users });
     } catch (err) {
         console.log('Error Occurred GetStatus', err.message);
         return res.status(500).json({ success: false, message: 'Error Encountered' });
