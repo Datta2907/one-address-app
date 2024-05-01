@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-export const Role = {
+const Role = {
     PRESIDENT: "PRESIDENT",
     RESIDENT: "RESIDENT",
     TENANT: "TENANT",
@@ -8,7 +8,7 @@ export const Role = {
     OTHERS: "OTHERS",
 }
 
-export const Status = {
+const Status = {
     APPLIED: "APPLIED",
     IN_PROGRESS: "IN_PROGRESS",
     VERIFIED: "VERIFIED",

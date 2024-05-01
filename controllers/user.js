@@ -1,4 +1,5 @@
-const { User, Role } = require('../models/user');
+const User = require('../models/user');
+const { userRole, userStatus } = require('../common/enums/enum');
 const bcrypt = require('bcrypt');
 const { createJwtToken } = require('../utils/jwtServices');
 
@@ -70,7 +71,7 @@ exports.getStatus = async (req, res) => {
 
 exports.getRepresentatives = async (req, res) => {
     try {
-        const users = await User.find({ role: Role.RESIDENT }).lean();
+        const users = await User.find({ role: userRole.RESIDENT }).lean();
         return res.status(200).json({ success: true, message: '', data: users });
     } catch (err) {
         console.log('Error Occurred GetStatus', err.message);
