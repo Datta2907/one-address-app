@@ -27,7 +27,7 @@ exports.verifyIdToken = async (req, res) => {
         if (decodedToken.email_verified && decodedToken.email == req.query.email) {
             return res.status(200).json({ success: true, message: "User Verified", data: decodedToken })
         } else {
-            return res.status(401).json({ success: false, message: "User Not Verified" })
+            return res.status(403).json({ success: false, message: "User Not Verified" })
         }
     } catch (error) {
         return res.status(500).json({ success: false, message: error.message })

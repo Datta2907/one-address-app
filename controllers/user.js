@@ -9,7 +9,8 @@ exports.register = async (req, res) => {
         if (user) {
             return res.status(200).json({ success: true, message: 'Email Registered, would you like to login?' });
         } else {
-            const { firstName, lastName, email, address, mobile, photo, gender, isOwner, isRepresentative, role, community, displayOrShareSensitiveDetails, password } = req.body;
+            //photo is pending
+            const { firstName, lastName, email, address, mobile, gender, isOwner, isRepresentative, role, community, displayOrShareSensitiveDetails, password } = req.body;
             if (!address || !mobile || !gender || !role || !community || !password) {
                 return res.status(412).json({ success: false, message: 'Please Provide all the details!' });
             }
@@ -26,7 +27,6 @@ exports.register = async (req, res) => {
                 email,
                 address,
                 mobile,
-                photo,
                 gender,
                 isOwner,
                 isRepresentative,
