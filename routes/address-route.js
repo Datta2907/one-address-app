@@ -1,8 +1,8 @@
 const express = require('express');
 const { authenticateUser } = require('../middlewares/authenticateUser');
-const { getAllCommunities } = require('../controllers/community');
+const { getAllAddresses } = require('../controllers/address');
 const router = express.Router();
 
-router.get("/list-in-cities", getAllCommunities)
+router.get("/all-addresses-of-user", authenticateUser, getAllAddresses)
 
 module.exports = router;

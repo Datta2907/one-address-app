@@ -28,7 +28,7 @@ app.use(express.json());
 app.use('/google-auth', require('./routes/google-route'));
 app.use('/manual-auth', require('./routes/auth-route'));
 app.use('/user', require('./routes/user-route'));
-app.use('/community', require('./routes/community-route'));
+app.use('/address', require('./routes/address-route'));
 
 // needed in heroku
 // if (process.env.NODE_ENV === 'production') {
@@ -40,6 +40,6 @@ app.use('/community', require('./routes/community-route'));
 //   });
 // }  
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 6000;
 
 app.listen(PORT, () => console.log(`Server started on port ${PORT}`));

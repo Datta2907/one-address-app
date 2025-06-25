@@ -17,15 +17,12 @@ async function insertSampleData() {
                 number: "7989374094",
             },
             gender: 'MALE',
-            isOwner: true,
-            isRepresentative: true,
-            role: 'DEVELOPER',
-            community: null,
+            role: 'ADMIN',
             status: 'VERIFIED',
             displayOrShareSensitiveDetails: true,
             password,
         });
-        const communityDetails = {
+        const addressDetails = {
             name: "Developers",
             address: "Ganesh nagar, beside sangeetha mobiles",
             country: "IN",
@@ -34,9 +31,12 @@ async function insertSampleData() {
             pincode: 500013,
             area: "ramanthapur",
             verifiedBy: insertedAdmin.insertedId,
-            representative: insertedAdmin.insertedId
+            representative: insertedAdmin.insertedId,
+            user: insertedAdmin.insertedId,
+            latitude: 49876.1234,
+            longitude: 12345.6789
         }
-        const insertedCommunity = await dbObj.collection("communities").insertOne(communityDetails);
+        await dbObj.collection("addresses").insertOne(addressDetails);
     } finally {
         await mongoClient.close();
     }

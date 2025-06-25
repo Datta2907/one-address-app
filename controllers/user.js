@@ -10,8 +10,8 @@ exports.register = async (req, res) => {
             return res.status(200).json({ success: true, message: 'Email Registered, would you like to login?' });
         } else {
             //photo is pending
-            const { firstName, lastName, email, address, mobile, gender, isOwner, isRepresentative, role, community, displayOrShareSensitiveDetails, password } = req.body;
-            if (!address || !mobile || !gender || !role || !community || !password) {
+            const { firstName, lastName, email, mobile, gender, role, displayOrShareSensitiveDetails, password } = req.body;
+            if (!mobile || !gender || !role || !password) {
                 return res.status(412).json({ success: false, message: 'Please Provide all the details!' });
             }
             if (!/^[a-z]+$/i.test(firstName) || !/^[a-z]+$/i.test(lastName)) {
@@ -25,13 +25,9 @@ exports.register = async (req, res) => {
             const info = {
                 name: firstName + lastName,
                 email,
-                address,
                 mobile,
                 gender,
-                isOwner,
-                isRepresentative,
                 role,
-                community,
                 displayOrShareSensitiveDetails,
                 status: "APPLIED",
                 password: encryptedPassword
@@ -52,7 +48,10 @@ exports.verifyUser = async (req, res) => {
         const data = await User.findByIdAndUpdate(req.body.verifiedUser, {
             verifiedBy: req.user.id
         });
-        return res.status(200).json({ success: true, message: 'Verified Succesfully' });
+        if (data) {
+            return res.status(200).json({ success: true, message: 'Verified Succesfully' });
+        }
+        return res.status(404).json({ success: false, message: 'User Not Found' });
     } catch (err) {
         console.log('Error Occurred Registration', err.message);
         return res.status(500).json({ success: false, message: 'Error Occured' });
@@ -62,7 +61,10 @@ exports.verifyUser = async (req, res) => {
 exports.getStatus = async (req, res) => {
     try {
         const user = await User.findOne({ email: req.user.email }).lean();
-        return res.status(200).json({ success: true, message: '', data: user });
+        if (data) {
+            return res.status(200).json({ success: true, message: 'Retreived Succesfully', data: user });
+        }
+        return res.status(404).json({ success: false, message: 'User Not Found' });
     } catch (err) {
         console.log('Error Occurred GetStatus', err.message);
         return res.status(500).json({ success: false, message: 'Error Encountered' });
@@ -72,7 +74,10 @@ exports.getStatus = async (req, res) => {
 exports.getRepresentatives = async (req, res) => {
     try {
         const users = await User.find({ role: userRole.RESIDENT }).lean();
-        return res.status(200).json({ success: true, message: '', data: users });
+        if (data) {
+            return res.status(200).json({ success: true, message: '', data: users });
+        }
+        return res.status(404).json({ success: false, message: 'User Not Found' });
     } catch (err) {
         console.log('Error Occurred GetStatus', err.message);
         return res.status(500).json({ success: false, message: 'Error Encountered' });
